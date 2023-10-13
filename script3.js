@@ -1,4 +1,6 @@
 "use strict"
+// form
+let form = document.querySelector('.form');
 // login form
 let login = document.querySelector('.login'),
     password = document.querySelector('.password');
@@ -22,14 +24,35 @@ let ulpassword = document.querySelector("#ul_password"),
     lenght_password = document.querySelector("#lenght_password"),
     symbol_password = document.querySelector("#symbol_password");
 
-inputBtn.disabled = true;
+// Регулярное выражение для email:
+// 5-6(символов)@4-5(символов).(ru/com)
 
-// let passwordPattern = /^[A-Za-z0-9_.]+$/;
-// let loginPattern = /^[A-Za-z]+$/g;
-// let passwordPattern = /^[0-9]+$/g;
+class User {
+    constructor(login, password) {
+        this.login = login;
+        this.password = password;
+    }
 
-let loginFlag = false,
-    passwordFlag = false;
+    changeUser() {
+        return this.login = 123;
+    }
+}
+
+let user = new User();
+console.log(user.changeUser());
+
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    if ((lenght_login.classList.contains("green") && symbol_login.classList.contains("green")) && lenght_password.classList.contains("green") && symbol_password.classList.contains("green")) {
+        p.textContent = "Ваше имя: " + login.value + ' Ваш пароль: ' + password.value;
+        console.log("Ваше имя: " + login.value + ' Ваш пароль: ' + password.value);
+        form.submit();
+    }
+    else {
+        event.preventDefault();
+    }
+})
 
 function validateLoginTips() {
     login.addEventListener("input", () => {
@@ -57,7 +80,6 @@ function validatePasswordTips() {
     password.addEventListener("input", () => {
         // firstTip
         if (password.value.length != 11) {
-            console.log(password.value.length)
             lenght_password.classList.add("red");
             lenght_password.classList.remove("green");
         } else {
@@ -75,47 +97,8 @@ function validatePasswordTips() {
     })
 }
 
-function inputLoginFormValidation() {
-    // if (login.value.length != 0 && (password.value.length != 0 && password.value.length > 3 && password.value.length < 9) && password.value.match(passwordPattern)) {
-    //     inputBtn.disabled = false;
-    //     console.log("check-login")
-    // }
-    // else {
-    //     inputBtn.disabled = true;
-    // }
-
-    if () {
-        inputBtn.disabled = false;
-        console.log("check-login")
-    }
-    else {
-        inputBtn.disabled = true;
-    }
-}
-
-inputBtn.addEventListener('click', function () {
-    p.textContent = "Ваше имя: " + login.value + ' Ваш пароль: ' + password.value;
-
-    login.value = "";
-    password.value = "";
-
-    console.log("Ваше имя: " + login.value + ' Ваш пароль: ' + password.value);
-})
-
-switchBtns.forEach(elem => {
-    elem.addEventListener('click', () => {
-        console.log("check")
-        if (regForm.classList.contains('hidden')) {
-            authForm.classList.add('hidden');
-            regForm.classList.remove('hidden')
-        }
-        else {
-            authForm.classList.remove('hidden');
-            regForm.classList.add('hidden')
-        }
-    })
-})
-
+validateLoginTips();
+validatePasswordTips();
 
 login.addEventListener('focus', () => {
     ullogin.classList.remove('hidden')
@@ -133,15 +116,22 @@ password.addEventListener("blur", () => {
     ulpassword.classList.add('hidden');
 });
 
-password.addEventListener('blur', inputLoginFormValidation)
-login.addEventListener('blur', inputLoginFormValidation)
+switchBtns.forEach(elem => {
+    elem.addEventListener('click', () => {
+        if (regForm.classList.contains('hidden')) {
+            authForm.classList.add('hidden');
+            regForm.classList.remove('hidden')
+        }
+        else {
+            authForm.classList.remove('hidden');
+            regForm.classList.add('hidden')
+        }
+    })
+})
 
-validateLoginTips();
-validatePasswordTips();
 
-
-
-
+let user1 = new User("Jack", 123);
+console.log(user1);
 
 // Наработки
 // let loginElems = [];
@@ -162,7 +152,6 @@ validatePasswordTips();
 
 //     return loginElems, passwordElems;
 // })();
-
 
 
 // Общие спецсимволы
